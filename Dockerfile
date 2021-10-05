@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:21.10
 LABEL maintainer="chuppa"
 
 ARG DEBIAN_FRONTEND="noninteractive"
@@ -28,16 +28,16 @@ RUN apt update && \
     locale-gen en_US.UTF-8 && \
 # install s6-overlay
 # https://github.com/just-containers/s6-overlay/releases
-    curl -fsSL "https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-${ARCH_S6}.tar.gz" | tar xzf - -C / && \
+    curl -fsSL "https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${ARCH_S6}.tar.gz" | tar xzf - -C / && \
 # install rclone
 # https://github.com/ncw/rclone/releases
-    curl -fsSL -o "/tmp/rclone.deb" "https://github.com/ncw/rclone/releases/download/v1.48.0/rclone-v1.48.0-linux-${ARCH_RCLONE}.deb" && dpkg --install "/tmp/rclone.deb" && \
+    curl -fsSL -o "/tmp/rclone.deb" "https://github.com/ncw/rclone/releases/download/v1.48.0/rclone-v1.56.2-linux-${ARCH_RCLONE}.deb" && dpkg --install "/tmp/rclone.deb" && \
 # install rar2fs
 # https://github.com/hasse69/rar2fs/releases
 # https://www.rarlab.com/rar_add.htm
     tempdir="$(mktemp -d)" && \
-    curl -fsSL "https://github.com/hasse69/rar2fs/archive/v1.27.2.tar.gz" | tar xzf - -C "${tempdir}" --strip-components=1 && \
-    curl -fsSL "https://www.rarlab.com/rar/unrarsrc-5.7.5.tar.gz" | tar xzf - -C "${tempdir}" && \
+    curl -fsSL "https://github.com/hasse69/rar2fs/archive/v1.29.5.tar.gz" | tar xzf - -C "${tempdir}" --strip-components=1 && \
+    curl -fsSL "https://www.rarlab.com/rar/unrarsrc-6.0.2.tar.gz" | tar xzf - -C "${tempdir}" && \
     cd "${tempdir}/unrar" && \
     make lib && make install-lib && \
     cd "${tempdir}" && \
